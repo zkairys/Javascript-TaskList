@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <title>Task List</title>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card-group">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Task List</h4>
+              <form>
+                <div class="form-group">
+                  <label for="task_field">New Task</label>
+                  <input type="text" class="form-control" id="task_field" placeholder="Enter Task">
+                </div>
+                <button type="submit" class="btn btn-primary">Add Task</button>
+              </form>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Tasks</h4>
+              <div class="input-group input-group-sm mb-5">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Filter Tasks</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              </div>
+              <a href="#!" class="btn btn-danger">Clear Tasks</a>
+              
+            </div>
+          </div>
+        </div>  
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
