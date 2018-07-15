@@ -16,10 +16,10 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Task List</h4>
-              <form>
+              <form id="task-form">
                 <div class="form-group">
                   <label for="task_field">New Task</label>
-                  <input type="text" class="form-control" id="task_field" placeholder="Enter Task">
+                  <input type="text" class="form-control" id="task" placeholder="Enter Task">
                 </div>
                 <button type="submit" class="btn btn-primary">Add Task</button>
               </form>
@@ -32,9 +32,10 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">Filter Tasks</span>
                 </div>
-                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" id="filter" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
-              <a href="#!" class="btn btn-danger">Clear Tasks</a>
+              <ul class="collection list-group"></ul>
+              <a href="#!" class="clear-tasks btn btn-danger mt-5">Clear Tasks</a>
               
             </div>
           </div>
