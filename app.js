@@ -153,7 +153,7 @@ function deleteAllTasks(){
 }
 
 function deleteFromLocalAll(text){
-    localStorage.clear();
+    localStorage.removeItem('tasks');
 }
 
 function filterTasks(e){
