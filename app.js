@@ -87,7 +87,7 @@ function addTask(e){
     } else {
         if(document.querySelector(".alert-danger")){
             cardBody.removeChild(document.querySelector(".alert-danger"));
-            console.log("alert-div yra")
+            
         }
         displayTasks(taskInput.value);
         saveToLocal(taskInput.value);
