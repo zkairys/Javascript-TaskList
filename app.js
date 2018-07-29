@@ -1,4 +1,3 @@
-
 const form = document.querySelector('#task-form');
 const taskList = document.querySelector('.collection');
 const clearBtn = document.querySelector('.clear-tasks');
@@ -8,12 +7,39 @@ const cardBody = document.querySelector('.card-body');
 loadEvents();
 
 function loadEvents(){
+  document.addEventListener('DOMContentLoaded', loadTasks);  
   form.addEventListener('submit', addTask);
-
   taskList.addEventListener('click', deleteTask);
   clearBtn.addEventListener('click', deleteAllTasks);
   filter.addEventListener('keyup', filterTasks);
 }
+
+function loadTasks(){
+    let tasks;
+    if(localStorage.getItem('tasks') !== null){
+      tasks = JSON.parse(localStorage.getItem('tasks'));
+    } else {
+      tasks = [];
+    }
+    
+    tasks.forEach(function(element, index){
+        displayTasks(element);
+    });    
+
+}
+
+function displayTasks(element){
+    const li = document.createElement("li");
+    li.className = "list-group-item d-flex justify-content-between align-items-center";
+    const task = document.createTextNode(element);
+    li.appendChild(task);
+    const a = document.createElement("a");    
+    a.style.cursor = 'pointer';      
+    a.innerHTML = '<i class="fa fa-remove"></i>';      
+    li.appendChild(a);       
+    taskList.appendChild(li);
+}
+
 
 
 function checkErrors(){
@@ -33,31 +59,14 @@ function addTask(e){
     checkErrors();
 
     if(checkErrors() === false){
-        // creating li 
-        const li = document.createElement("li");
-        //add class to list
-        li.className = "list-group-item d-flex justify-content-between align-items-center";
-        // grabbing value and creating text node
-        const task = document.createTextNode(taskInput.value);
-        // insert text inside li
-        li.appendChild(task);
-        // add link to li
-        const a = document.createElement("a");
-        //add cursor 
-        a.style.cursor = 'pointer';
-        // a add remove icon
-        a.innerHTML = '<i class="fa fa-remove"></i>';
-        // add a insi li  
-        li.appendChild(a); 
-        // insert li into ul
-        taskList.appendChild(li);
+
+        displayTasks(taskInput.value);
 
         if(cardBody.classList.contains("error-active")){
             cardBody.classList.remove("error-active");
             cardBody.removeChild(document.querySelector(".alert-danger"));
         }
-        
-
+        saveToLocal(taskInput.value);
         clearInput();
     }  else {
         if(cardBody.classList.contains("error-active")){
@@ -74,7 +83,6 @@ function addTask(e){
         
     } 
        
-    // prevent form from reloading on submit
     e.preventDefault();
 }
 
@@ -82,9 +90,28 @@ function addTask(e){
 function deleteTask(e){
 
     if(e.target.classList.contains("fa-remove")){
-      console.log(e.target.parentElement.parentElement.remove());
       e.target.parentElement.parentElement.remove();
+
+      deleteFromLocalSingle(e.target.parentElement.parentElement.textContent);
     }
+}
+
+function deleteFromLocalSingle(text){
+
+    let tasks;
+    if(localStorage.getItem('tasks') !== null){
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    } else {
+        tasks = [];
+    }
+
+    tasks.forEach(function(element, index){
+        if(text === element){
+            tasks.splice(index, 1);
+        }
+    });
+
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 function deleteAllTasks(){
@@ -95,7 +122,13 @@ function deleteAllTasks(){
         taskListChildren.forEach(function(element, index){
             element.remove();
         });  
+
+        deleteFromLocalAll();
     }
+}
+
+function deleteFromLocalAll(text){
+    localStorage.clear();
 }
 
 function filterTasks(e){
@@ -104,12 +137,12 @@ function filterTasks(e){
         const textInsideTheInput = e.target.value.toLowerCase();
    
         taskListChildren.forEach(function(element, index){
-            
+
             const elementText = element.textContent;    
 
             if(elementText.toLowerCase().indexOf(textInsideTheInput) > -1){
                 element.style.display = 'flex';
-                // bostrap has d-flex as !important
+                // bootstrap has d-flex as !important
                 if(!element.classList.contains("d-flex")){
                     element.classList.add("d-flex");
                 }
@@ -119,8 +152,19 @@ function filterTasks(e){
             }
         });
         
-    }
+    } 
+}
 
-   
-   
+function saveToLocal(task){
+    
+    let tasks;
+    if(localStorage.getItem('tasks') === null){
+      tasks = [];
+    } else {
+      tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+  
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+      
 }
