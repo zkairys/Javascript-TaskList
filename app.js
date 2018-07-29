@@ -4,7 +4,7 @@ const clearBtn = document.querySelector('.clear-tasks');
 const filter = document.querySelector('#filter');
 const taskInput = document.querySelector('#task');
 const cardBody = document.querySelector('.card-body');
-const errorDiv = document.querySelector(".alert-danger");
+
 
 loadEvents();
 
@@ -85,8 +85,9 @@ function addTask(e){
     } else if(checkDublicate(taskInput.value) === true){
         displayError("dublicate-active", "Dublicate Task");
     } else {
-        if(errorDiv){
-            cardBody.removeChild(errorDiv);
+        if(document.querySelector(".alert-danger")){
+            cardBody.removeChild(document.querySelector(".alert-danger"));
+            console.log("alert-div yra")
         }
         displayTasks(taskInput.value);
         saveToLocal(taskInput.value);
