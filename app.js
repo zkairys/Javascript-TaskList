@@ -8,8 +8,10 @@ const cardBody = document.querySelector('.card-body');
 loadEvents();
 
 function loadEvents(){
-  // Add task event
   form.addEventListener('submit', addTask);
+
+  taskList.addEventListener('click', deleteTask);
+  clearBtn.addEventListener('click', deleteAllTasks);
 }
 
 
@@ -75,3 +77,25 @@ function addTask(e){
     e.preventDefault();
 }
 
+
+function deleteTask(e){
+
+    if(e.target.classList.contains("fa-remove")){
+      console.log(e.target.parentElement.parentElement.remove());
+      e.target.parentElement.parentElement.remove();
+    }
+}
+
+
+function deleteAllTasks(){
+
+    if(taskList.hasChildNodes()){
+        const taskListChildren = Array.from(taskList.childNodes);
+        
+        taskListChildren.forEach(function(element, index){
+            element.remove();
+        });
+        
+    }
+    
+}
