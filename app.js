@@ -12,6 +12,7 @@ function loadEvents(){
 
   taskList.addEventListener('click', deleteTask);
   clearBtn.addEventListener('click', deleteAllTasks);
+  filter.addEventListener('keyup', filterTasks);
 }
 
 
@@ -86,7 +87,6 @@ function deleteTask(e){
     }
 }
 
-
 function deleteAllTasks(){
 
     if(taskList.hasChildNodes()){
@@ -94,8 +94,33 @@ function deleteAllTasks(){
         
         taskListChildren.forEach(function(element, index){
             element.remove();
+        });  
+    }
+}
+
+function filterTasks(e){
+    if(taskList.hasChildNodes()){
+        const taskListChildren = Array.from(taskList.childNodes);
+        const textInsideTheInput = e.target.value.toLowerCase();
+   
+        taskListChildren.forEach(function(element, index){
+            
+            const elementText = element.textContent;    
+
+            if(elementText.toLowerCase().indexOf(textInsideTheInput) > -1){
+                element.style.display = 'flex';
+                // bostrap has d-flex as !important
+                if(!element.classList.contains("d-flex")){
+                    element.classList.add("d-flex");
+                }
+            } else {
+                element.classList.remove("d-flex");
+                element.style.display = 'none';
+            }
         });
         
     }
-    
+
+   
+   
 }
