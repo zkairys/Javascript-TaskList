@@ -55,37 +55,57 @@ function clearInput(){
 }
 
 
-function addTask(e){
-    checkErrors();
 
-    if(checkErrors() === false){
+function checkDublicate(text){
+    if(taskList.hasChildNodes()){
+        const taskListChildren = Array.from(taskList.childNodes);
+        let taskListChildrenTxt = [];
 
-        displayTasks(taskInput.value);
+        taskListChildren.forEach(function(element, index){
+            taskListChildrenTxt.push(element.textContent);       
+        });  
 
-        if(cardBody.classList.contains("error-active")){
-            cardBody.classList.remove("error-active");
-            cardBody.removeChild(document.querySelector(".alert-danger"));
-        }
-        saveToLocal(taskInput.value);
-        clearInput();
-    }  else {
-        if(cardBody.classList.contains("error-active")){
-            console.log("has class");
+        if(taskListChildrenTxt.indexOf(text) > -1){
+            return true;
         } else {
-            const errordiv = document.createElement("div");
-            errordiv.classList = "alert alert-danger"; 
-            const errorMessage = document.createTextNode("Can not add an empty task, please add a task name");
-            errordiv.appendChild(errorMessage);
-            cardBody.insertBefore(errordiv, form);
-
-            cardBody.classList.add("error-active");
+            return false; 
         }
         
-    } 
+    }
+}
+
+
+function addTask(e){
+
+    if(checkErrors() === true){
+        displayError("error-active", "Can not add an empty task");
+
+    } else if(checkDublicate(taskInput.value) === true){
+        displayError("dublicate-active", "Dublicate Task");
+    } else {
+        cardBody.removeChild(document.querySelector(".alert-danger"));
+        displayTasks(taskInput.value);
+        saveToLocal(taskInput.value);
+        clearInput();
+    }
        
     e.preventDefault();
 }
 
+function displayError(nameClass, message){
+
+    const alert = document.querySelector(".alert");
+    if(alert){
+        alert.classList = "alert alert-danger " + nameClass;
+        alert.textContent = message;
+    } else {
+        const errordiv = document.createElement("div");
+        errordiv.classList = "alert alert-danger " + nameClass; 
+        const errorMessage = document.createTextNode(message);
+        errordiv.appendChild(errorMessage);
+        cardBody.insertBefore(errordiv, form);
+    }
+}
 
 function deleteTask(e){
 
